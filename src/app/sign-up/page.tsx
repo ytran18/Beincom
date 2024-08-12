@@ -8,23 +8,29 @@ import LoginBg from '@/assets/images/background.webp';
 
 const { Password } = Input;
 
-interface LoginState {
+interface SignUpState {
     email: string;
+    username: string;
+    fullname: string;
     password: string;
 }
 
-const Login = () => {
+const SignUp = () => {
 
-    const [state, setState] = useState<LoginState>({
+    const [state, setState] = useState<SignUpState>({
         email: '',
-        password: ''
+        username: '',
+        fullname: '',
+        password: '',
     });
 
-    const handleLogin = () => {
-        const { email, password } = state;
+    const handleSignUp = () => {
+        const { email, username, password, fullname } = state;
 
         console.log({email});
+        console.log({username});
         console.log({password});
+        console.log({fullname});
     };
 
     return (
@@ -37,12 +43,12 @@ const Login = () => {
                 />
             </div>
             <div className="w-full h-full flex items-center justify-center">
-                <div className="w-full sm:w-[27.25rem] bg-white h-fit rounded-2xl p-12">
-                    <div className="flex flex-col gap-1 pb-6 text-center">
+                <div className="w-full mx-4 sm:w-[27.25rem] bg-white h-fit rounded-2xl p-12">
+                    <div className="flex flex-col gap-1 pb-10 text-center">
                         <div className="text-2xl font-bold">Log in to Beincom</div>
                         <div className="text-sm opacity-70">The future of community engagement</div>
                     </div>
-                    <div className="w-full px-3 flex flex-col gap-4 pb-6">
+                    <div className="w-full px-3 flex flex-col gap-4 pb-10">
                         <div className="flex flex-col gap-1 text-sm">
                             Email
                             <Input
@@ -50,6 +56,24 @@ const Login = () => {
                                 size="large"
                                 value={state.email}
                                 onChange={(e) => setState(prev => ({...prev, email: e.target.value}))}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1 text-sm">
+                            Username
+                            <Input
+                                placeholder="Your username"
+                                size="large"
+                                value={state.username}
+                                onChange={(e) => setState(prev => ({...prev, username: e.target.value}))}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1 text-sm">
+                            Full name
+                            <Input
+                                placeholder="Your full name"
+                                size="large"
+                                value={state.fullname}
+                                onChange={(e) => setState(prev => ({...prev, fullname: e.target.value}))}
                             />
                         </div>
                         <div className="flex flex-col gap-1 text-sm">
@@ -61,24 +85,21 @@ const Login = () => {
                                 onChange={(e) => setState(prev => ({...prev, password: e.target.value}))}
                             />
                         </div>
-                        <div className="w-full flex flex-col gap-1">
-                            <Button
-                                size="large"
-                                type="primary"
-                                disabled={!state.email || !state.password}
-                                onClick={handleLogin}
-                            >
-                                Log In
-                            </Button>
-                            <div className="text-sm text-blue-400 hover:underline cursor-pointer text-end">Fotgot password?</div>
-                        </div>
                     </div>
-                    <div className="w-full text-sm text-center">
+                    <div className="w-full px-3 text-sm text-center flex flex-col gap-2">
+                        <Button
+                            size="large"
+                            type="primary"
+                            disabled={!state.email || !state.password || !state.fullname || !state.username}
+                            onClick={handleSignUp}
+                        >
+                            Sign up
+                        </Button>
                         <div>
-                            Don't have an account?&nbsp;
+                            Already have an account?&nbsp;
                             <span className="text-blue-500 hover:underline cursor-pointer">
-                                <Link href={'/sign-up'}>
-                                    Sign up
+                                <Link href={'/login'}>
+                                    Log in
                                 </Link>
                             </span>
                         </div>
@@ -89,4 +110,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
