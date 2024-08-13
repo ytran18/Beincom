@@ -3,7 +3,14 @@ import { UserOutlined } from "@ant-design/icons";
 
 import IconPost from '@/assets/icons/iconPost.svg';
 
-const WelcomePost = () => {
+interface WelcomePostProps {
+    handleModalCreatePost: () => void;
+}
+
+const WelcomePost = (props: WelcomePostProps) => {
+
+    const { handleModalCreatePost } = props;
+
     return (
         <div className="w-full p-4 flex flex-col gap-3 shadow-md">
             <div className="flex items-center gap-4">
@@ -21,6 +28,7 @@ const WelcomePost = () => {
             <Button
                 icon={<IconPost className="text-[#4096ff]"/>}
                 size="large"
+                onClick={handleModalCreatePost}
             >
                 Quick Post
             </Button>

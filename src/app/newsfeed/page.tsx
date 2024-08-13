@@ -3,11 +3,14 @@
 import Header from "@/components/Header";
 import Feed from "@/components/Feed";
 
-import usePost from "@/hooks/usePost";
+import { auth } from "@/core/firebase";
+import { useEffect } from "react";
+import { useGetAllPosts } from "@/hooks/usePost";
 
 const NewsFeed = () => {
+    
+    const { data, isPending } = useGetAllPosts();
 
-    const { data } = usePost(10);
     console.log({data});
 
     return (
@@ -16,12 +19,14 @@ const NewsFeed = () => {
                 <Header />
             </div>
             <div
-                className="bg-[#eaedf2] w-full flex justify-center"
+                className="bg-[#eaedf2] w-full flex justify-center overflow-y-auto"
                 style={{
                     height: 'calc(100vh - 60px)'
                 }}
             >
-                <Feed />
+                <Feed
+                    posts={[]}
+                />
             </div>
         </div>
     );

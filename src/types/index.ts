@@ -1,8 +1,18 @@
+export interface Comment {
+    _id: string;
+    userId: string;
+    content: string;
+    createdAt: number;
+    replies?: Comment[];
+};
+
 export interface Post {
-    userId: number;
-    id: number;
+    _id: string;
+    userId: string;
     title: string;
-    body: string;
+    content: string;
+    comments: Comment[];
+    createdAt: number;
 };
 
 export interface User {
