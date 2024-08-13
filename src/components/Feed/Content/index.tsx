@@ -12,10 +12,10 @@ const Content = (props: ContentProps) => {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            {posts?.map((item) => {
+            {posts?.map((item, index) => {
                 return (
                     <div
-                        key={`post-${item.id}`}
+                        key={`post-${index}`}
                         className=""
                     >
                         <SinglePost

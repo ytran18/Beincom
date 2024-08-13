@@ -23,7 +23,7 @@ const SinglePost = (props: SinglePost) => {
             </div>
             <div className="w-full flex flex-col gap-2">
                 <div className="text-xl">{post.title}</div>
-                <div className="text-sm">{post.body}</div>
+                {/* <div className="text-sm">{post.body}</div> */}
             </div>
             <div className=""></div>
             <div className=""></div>
