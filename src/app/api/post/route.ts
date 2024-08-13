@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     };
 };
 
-// Get a post by ID
+// Get post
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lato } from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import Providers from "@/core/providers";
 import "./globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Lato({ subsets: ["latin"], weight: '400' });
 
 export const metadata: Metadata = {
     title: "Beincom",

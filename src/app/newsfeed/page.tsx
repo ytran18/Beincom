@@ -1,17 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Feed from "@/components/Feed";
 
 import { auth } from "@/core/firebase";
-import { useEffect } from "react";
 import { useGetAllPosts } from "@/hooks/usePost";
 
+import { Post } from "@/types";
+
+interface NewsFeedState {
+    posts: Post[];
+}
+
 const NewsFeed = () => {
+
+    const [state, setState] = useState<NewsFeedState>({
+        posts: [],
+    });
     
     const { data, isPending } = useGetAllPosts();
 
-    console.log({data});
+    useEffect(() => {
+        if (data) setState(prev => ({...prev, posts: data}));
+    },[data]);
 
     return (
         <div className="w-screen h-screen">
@@ -25,7 +37,7 @@ const NewsFeed = () => {
                 }}
             >
                 <Feed
-                    posts={[]}
+                    posts={state.posts}
                 />
             </div>
         </div>
