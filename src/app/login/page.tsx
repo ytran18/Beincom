@@ -4,7 +4,6 @@ import { Input, Button, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { setCookie } from "nookies";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/core/firebase";
@@ -35,7 +34,6 @@ const Login = () => {
             const user = userCredential.user;
 
             const token = await user.getIdToken();
-            setCookie(null, 'user-token', token, { path: '/' });
 
             message.success('Login successful!');
             router.push('/newsfeed');
