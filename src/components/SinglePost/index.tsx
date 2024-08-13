@@ -4,6 +4,7 @@ import useAuth from "@/hooks/useAuth";
 import CommentInput from "../CommentInput";
 
 import { Post } from "@/types";
+import { timeGap } from "@/utils";
 import { UserOutlined, LikeOutlined, CommentOutlined, LinkOutlined } from "@ant-design/icons";
 
 interface SinglePost {
@@ -26,7 +27,7 @@ const SinglePost = (props: SinglePost) => {
                 />
                 <div className="flex flex-col gap-1">
                     <div className="text-sm font-bold tracking-wide">{user?.name}</div>
-                    <div className="text-xs opacity-60 font-semibold">4 mins</div>
+                    <div className="text-xs opacity-60 font-semibold">{timeGap(post.createdAt)}</div>
                 </div>
             </div>
             <div className="w-full flex flex-col gap-2">
