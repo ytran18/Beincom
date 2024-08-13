@@ -1,8 +1,13 @@
 "use client"
 import { useState } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { setCookie } from "nookies";
+
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/core/firebase";
 
 import LoginBg from '@/assets/images/background.webp';
 
@@ -15,16 +20,30 @@ interface LoginState {
 
 const Login = () => {
 
+    const router = useRouter();
+
     const [state, setState] = useState<LoginState>({
         email: '',
         password: ''
     });
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         const { email, password } = state;
 
-        console.log({email});
-        console.log({password});
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            const token = await user.getIdToken();
+            setCookie(null, 'user-token', token, { path: '/' });
+
+            message.success('Login successful!');
+            router.push('/newsfeed');
+
+            return user;
+        } catch (error) {
+            throw error;
+        };
     };
 
     return (

@@ -1,9 +1,21 @@
 "use client"
 import { useState } from "react";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from "@/core/firebase";
 
+const { v4: uuidv4 } = require('uuid');
+
+// hooks
+import { useCreateUser } from "@/hooks/useUser";
+
+// utils
+import { isValidEmail } from "@/utils";
+
+// image, icons
 import LoginBg from '@/assets/images/background.webp';
 
 const { Password } = Input;
@@ -17,6 +29,8 @@ interface SignUpState {
 
 const SignUp = () => {
 
+    const router = useRouter();
+
     const [state, setState] = useState<SignUpState>({
         email: '',
         username: '',
@@ -24,13 +38,44 @@ const SignUp = () => {
         password: '',
     });
 
-    const handleSignUp = () => {
+    const { mutate, isPending } = useCreateUser();
+
+    const signUp = async (email: string, password: string) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            return user;
+        } catch (error) {
+            throw error;
+        };
+    };
+    
+    const handleSignUp = async () => {
         const { email, username, password, fullname } = state;
 
-        console.log({email});
-        console.log({username});
-        console.log({password});
-        console.log({fullname});
+        if (!isValidEmail(email)) {
+            message.error('Invalid email');
+            return;
+        };
+
+        try {
+            const user = await signUp(email, password);
+
+            mutate(
+                { email, username, password, name: fullname, _id: user.uid },
+                {
+                    onSuccess: () => {
+                        message.success("User created successfully!");
+                        router.push('/login');
+                    },
+                    onError: (error) => {
+                        message.error(`Failed to create user: ${error.message}`);
+                    },
+                }
+            );
+        } catch (error: any) {
+            message.error(`Failed to sign up: ${error.message}`);
+        };
     };
 
     return (
@@ -55,6 +100,7 @@ const SignUp = () => {
                                 placeholder="Your email"
                                 size="large"
                                 value={state.email}
+                                status={isValidEmail(state.email) ? '' : 'error'}
                                 onChange={(e) => setState(prev => ({...prev, email: e.target.value}))}
                             />
                         </div>
@@ -92,6 +138,7 @@ const SignUp = () => {
                             type="primary"
                             disabled={!state.email || !state.password || !state.fullname || !state.username}
                             onClick={handleSignUp}
+                            loading={isPending}
                         >
                             Sign up
                         </Button>
