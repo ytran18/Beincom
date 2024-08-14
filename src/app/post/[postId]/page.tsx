@@ -44,7 +44,7 @@ const PostDetail = ({ params }: { params: { postId: string } }) => {
                     height: 'calc(100vh - 60px)'
                 }}
             >
-                <div className="w-full h-fit min-w-[524px] max-w-[672px]">
+                <div className="w-full h-fit px-6 md:min-w-[524px] max-w-[672px]">
                     <SinglePost
                         post={state.post}
                     />

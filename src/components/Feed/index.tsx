@@ -39,7 +39,7 @@ const Feed = (props: FeedProps) => {
     };
 
     return (
-        <section className="w-full h-full min-w-[524px] max-w-[672px] pt-6">
+        <section className="w-full h-full px-6 md:px-0 md:min-w-[524px] max-w-[672px] pt-6">
             <div className="w-full bg-white rounded-lg mb-4">
                 <WelcomePost
                     handleModalCreatePost={handleModalCreatePost}

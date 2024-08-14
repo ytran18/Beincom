@@ -26,7 +26,7 @@ const Header = () => {
 
     return (
         <div className="w-full h-full flex items-center justify-between">
-            <div className="flex flex-grow min-w-[288px] max-w-[320px]">
+            <div className="flex">
                 <Link className="flex items-center gap-1" href={'/newsfeed'}>
                     <Image
                         alt="logo-icon"
@@ -40,7 +40,7 @@ const Header = () => {
                     />
                 </Link>
             </div>
-            <div className="min-w-[524px] max-w-[672px]">
+            <div className="hidden md:flex md:w-[300px] lg:w-[500px]">
                 <Search
                     rootClassName="w-full"
                     value={state.searchContent}
@@ -48,7 +48,7 @@ const Header = () => {
                     placeholder="Search content"
                 />
             </div>
-            <div className="min-w-[288px] max-w-[320px] flex items-center justify-end">
+            <div className=" flex items-center justify-end">
                 <Popover
                     trigger={"click"}
                     placement="bottomRight"
