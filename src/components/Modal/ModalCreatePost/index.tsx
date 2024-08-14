@@ -50,9 +50,10 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
             createdAt: new Date().getTime(),
             comments: [],
         };
-
+        
         handleModalCreatePost();
         handleNewPost(post);
+        setState(prev => ({...prev, content: '', title: ''}));
     };
 
     return (

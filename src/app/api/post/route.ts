@@ -69,7 +69,8 @@ export async function GET(req: NextRequest) {
             return NextResponse.json(responseData, { status: 200 });
         } else {
             const postsCollection = collection(fireStore, "posts");
-            const postsSnapshot = await getDocs(postsCollection);
+            const postsQuery = query(postsCollection, orderBy("createdAt", "desc"));
+            const postsSnapshot = await getDocs(postsQuery);
 
             const postsList = await Promise.all(postsSnapshot.docs.map(async (doc) => {
                 const postData = doc.data();
@@ -109,74 +110,3 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
     }
 }
-
-// export async function GET(req: NextRequest) {
-//     try {
-//         const { searchParams } = new URL(req.url);
-//         const postId = searchParams.get("id");
-
-//         if (postId) {
-//             const docRef = doc(fireStore, "posts", postId);
-//             const docSnap = await getDoc(docRef);
-
-//             if (!docSnap.exists()) {
-//                 return NextResponse.json({ error: "Post not found" }, { status: 404 });
-//             }
-
-//             const postData = docSnap.data();
-
-//             // Fetch comments for the post
-//             const commentsRef = collection(fireStore, "comments");
-//             const commentsQuery = query(
-//                 commentsRef,
-//                 where("postId", "==", postId),
-//                 orderBy("createdAt", "asc")
-//             );
-//             const commentsSnapshot = await getDocs(commentsQuery);
-//             const commentsList = commentsSnapshot.docs.map(doc => ({
-//                 _id: doc.id,
-//                 ...doc.data(),
-//             }));
-
-//             // Combine post data with comments
-//             const responseData = {
-//                 ...postData,
-//                 comments: commentsList,
-//             };
-
-//             return NextResponse.json(responseData, { status: 200 });
-//         } else {
-//             const postsCollection = collection(fireStore, "posts");
-//             const postsSnapshot = await getDocs(postsCollection);
-//             const postsList = await Promise.all(postsSnapshot.docs.map(async (doc) => {
-//                 const postId = doc.id;
-//                 const postData = doc.data();
-
-//                 // Fetch the latest comment for this post
-//                 const commentsRef = collection(fireStore, "comments");
-//                 const latestCommentQuery = query(
-//                     commentsRef,
-//                     where("postId", "==", postId),
-//                     orderBy("createdAt", "desc"),
-//                     limit(1)
-//                 );
-//                 const latestCommentSnapshot = await getDocs(latestCommentQuery);
-//                 const latestComment = latestCommentSnapshot.docs.map(commentDoc => ({
-//                     _id: commentDoc.id,
-//                     ...commentDoc.data(),
-//                 }))[0]; // Take the first (and only) comment if exists
-
-//                 return {
-//                     _id: postId,
-//                     ...postData,
-//                     comments: latestComment ? [latestComment] : [],
-//                 };
-//             }));
-
-//             return NextResponse.json(postsList, { status: 200 });
-//         }
-//     } catch (error) {
-//         console.error("Error fetching posts or comments:", error);
-//         return NextResponse.json({ error: "Failed to fetch posts or comments", details: error }, { status: 500 });
-//     }
-// }
