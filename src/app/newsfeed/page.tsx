@@ -5,9 +5,10 @@ import Header from "@/components/Header";
 import Feed from "@/components/Feed";
 
 import { auth } from "@/core/firebase";
-import { useGetAllPosts } from "@/hooks/usePost";
+import { useGetAllPosts, useCreatePost } from "@/hooks/usePost";
 
 import { Post } from "@/types";
+import { message } from "antd";
 
 interface NewsFeedState {
     posts: Post[];
@@ -19,11 +20,26 @@ const NewsFeed = () => {
         posts: [],
     });
     
-    const { data, isPending } = useGetAllPosts();
+    const { data, isPending, refetch } = useGetAllPosts();
+    const { mutate, isPending: createPending } = useCreatePost();
 
     useEffect(() => {
         if (data) setState(prev => ({...prev, posts: data}));
     },[data]);
+
+    const handleNewPost = (post: Post) => {
+        mutate(post,
+            {
+                onSuccess: () => {
+                    message.success("Post created successfully!");
+                    refetch();
+                },
+                onError: (error) => {
+                    message.error(`Failed to create post: ${error.message}`);
+                },
+            }
+        );
+    };
 
     return (
         <div className="w-screen h-screen">
@@ -38,6 +54,8 @@ const NewsFeed = () => {
             >
                 <Feed
                     posts={state.posts}
+                    handleNewPost={handleNewPost}
+                    isCreatePostPending={createPending}
                 />
             </div>
         </div>

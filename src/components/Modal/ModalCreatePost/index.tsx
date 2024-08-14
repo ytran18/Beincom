@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { Modal, Avatar, Input, Button, message } from "antd";
+import { Modal, Avatar, Input, Button } from "antd";
 import useAuth from "@/hooks/useAuth";
 import { UserOutlined } from "@ant-design/icons";
 import { Post } from "@/types";
-import { useCreatePost } from "@/hooks/usePost";
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -11,7 +10,9 @@ const { TextArea } = Input;
 
 interface ModalCreatePostProps {
     open: boolean;
+    isCreatePostPending: boolean;
     handleModalCreatePost: () => void;
+    handleNewPost: (post: Post) => void;
 };
 
 interface ModalCreatePostState {
@@ -21,8 +22,8 @@ interface ModalCreatePostState {
 
 const ModalCreatePost = (props: ModalCreatePostProps) => {
 
-    const { open } = props;
-    const { handleModalCreatePost } = props;
+    const { open, isCreatePostPending } = props;
+    const { handleModalCreatePost, handleNewPost } = props;
 
     const [state, setState] = useState<ModalCreatePostState>({
         content: '',
@@ -31,8 +32,6 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
 
     const user = useAuth().user;
     const inputRef = useRef<HTMLTextAreaElement>(null);
-
-    const { mutate, isPending } = useCreatePost();
 
     useEffect(() => {
         if (inputRef.current) inputRef.current.focus();
@@ -43,7 +42,7 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
 
         if (!user?._id) return;
 
-        const post = {
+        const post: Post = {
             _id: uuidv4(),
             userId: user._id,
             title: title,
@@ -52,17 +51,8 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
             comments: [],
         };
 
-        mutate(post,
-            {
-                onSuccess: () => {
-                    message.success("Post created successfully!");
-                    handleModalCreatePost();
-                },
-                onError: (error) => {
-                    message.error(`Failed to create post: ${error.message}`);
-                },
-            }
-        );
+        handleModalCreatePost();
+        handleNewPost(post);
     };
 
     return (
@@ -102,7 +92,7 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
                     size="large"
                     disabled={!state.content || !state.title}
                     onClick={handleCreatePost}
-                    loading={isPending}
+                    loading={isCreatePostPending}
                 >
                     Post
                 </Button>

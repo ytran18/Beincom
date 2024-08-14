@@ -16,11 +16,14 @@ interface FeedState {
 
 interface FeedProps {
     posts?: Post[];
+    isCreatePostPending: boolean;
+    handleNewPost: (post: Post) => void;
 }
 
 const Feed = (props: FeedProps) => {
 
-    const { posts } = props;
+    const { posts, isCreatePostPending } = props;
+    const { handleNewPost } = props;
 
     const [state, setState] = useState<FeedState>({
         isModalCreatePost: false,
@@ -55,6 +58,8 @@ const Feed = (props: FeedProps) => {
             </div>
             <ModalCreatePost
                 open={state.isModalCreatePost}
+                isCreatePostPending={isCreatePostPending}
+                handleNewPost={handleNewPost}
                 handleModalCreatePost={handleModalCreatePost}
             />
         </section>

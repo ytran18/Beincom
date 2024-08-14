@@ -106,7 +106,7 @@ const SinglePost = (props: SinglePostProps) => {
 
             <div className="w-full flex flex-col gap-2">
                 <div className="text-xl">{post.title}</div>
-                <div className="text-sm">{post.content}</div>
+                <div className="text-sm w-full h-fit">{post.content}</div>
             </div>
 
             <div className="w-full flex items-center justify-between">
