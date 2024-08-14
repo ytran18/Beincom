@@ -1,6 +1,7 @@
 export interface Comment {
     _id: string;
     userId: string;
+    postId: string;
     content: string;
     createdAt: number;
     replies?: Comment[];
@@ -13,6 +14,7 @@ export interface Post {
     content: string;
     comments: Comment[];
     createdAt: number;
+    totalComment?: number;
 };
 
 export interface User {
