@@ -47,7 +47,26 @@ export async function GET(req: NextRequest) {
 
             const postData = docSnap.data();
 
-            return NextResponse.json(postData, { status: 200 });
+            // Fetch comments for the post
+            const commentsRef = collection(fireStore, "comments");
+            const commentsQuery = query(
+                commentsRef,
+                where("postId", "==", postId),
+                // orderBy("createdAt", "asc")
+            );
+            const commentsSnapshot = await getDocs(commentsQuery);
+            const commentsList = commentsSnapshot.docs.map(doc => ({
+                _id: doc.id,
+                ...doc.data(),
+            }));
+
+            // Combine post data with comments
+            const responseData = {
+                ...postData,
+                comments: commentsList,
+            };
+
+            return NextResponse.json(responseData, { status: 200 });
         } else {
             const postsCollection = collection(fireStore, "posts");
             const postsSnapshot = await getDocs(postsCollection);

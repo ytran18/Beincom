@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Avatar, message } from "antd";
 import useAuth from "@/hooks/useAuth";
 import { useCreateComment } from "@/hooks/useComment";
+import { useRouter } from "next/navigation";
 
 import CommentInput from "../CommentInput";
 import Comments from "../Comments";
@@ -26,6 +27,7 @@ const SinglePost = (props: SinglePostProps) => {
 
     const { post } = props;
     const user = useAuth().user;
+    const router = useRouter();
 
     const [state, setState] = useState<SinglePostState>({
         comments: [],
@@ -84,8 +86,12 @@ const SinglePost = (props: SinglePostProps) => {
         
     };
 
+    const handleNavigatePostDetail = () => {
+        router.push(`/post/${post._id}`)
+    };
+
     return (
-        <div className="w-full p-4 flex flex-col gap-3 shadow-md bg-white rounded-lg">
+        <div className="w-full h-fit p-4 flex flex-col gap-3 shadow-md bg-white rounded-lg">
             <div className="w-full flex gap-4">
                 <Avatar
                     // shape="square"
@@ -108,7 +114,10 @@ const SinglePost = (props: SinglePostProps) => {
                     <LikeOutlined />
                     <div>12</div>
                 </div>
-                <div className="text-xs font-medium opacity-70 cursor-pointer hover:underline">
+                <div
+                    className="text-xs font-medium opacity-70 cursor-pointer hover:underline"
+                    onClick={handleNavigatePostDetail}
+                >
                     {`${post.totalComment || 0} comments`}
                 </div>
             </div>
