@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
             const commentsQuery = query(
                 commentsRef,
                 where("postId", "==", postId),
-                // orderBy("createdAt", "asc")
+                orderBy("createdAt", "asc")
             );
             const commentsSnapshot = await getDocs(commentsQuery);
             const commentsList = commentsSnapshot.docs.map(doc => ({
@@ -60,10 +60,18 @@ export async function GET(req: NextRequest) {
                 ...doc.data(),
             }));
 
+            const totalCommentsQuery = query(
+                commentsRef,
+                where("postId", "==", postId)
+            );
+            const totalCommentsSnapshot = await getDocs(totalCommentsQuery);
+            const totalCommentCount = totalCommentsSnapshot.size;
+
             // Combine post data with comments
             const responseData = {
                 ...postData,
                 comments: commentsList,
+                totalComment: totalCommentCount,
             };
 
             return NextResponse.json(responseData, { status: 200 });
@@ -79,7 +87,7 @@ export async function GET(req: NextRequest) {
                 const latestCommentQuery = query(
                     commentsRef,
                     where("postId", "==", doc.id),
-                    // orderBy("createdAt", "desc"),
+                    orderBy("createdAt", "desc"),
                     limit(1)
                 );
                 const latestCommentSnapshot = await getDocs(latestCommentQuery);
@@ -107,6 +115,6 @@ export async function GET(req: NextRequest) {
         }
     } catch (error) {
         console.error("Error fetching posts:", error);
-        return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
+        return NextResponse.json({ error: "Failed to fetch posts", detail: error }, { status: 500 });
     }
 }

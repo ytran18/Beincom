@@ -19,6 +19,7 @@ interface SingleCommentState {
     isReply: boolean;
     replies: Comment[];
     replyContent: string;
+    isFocusComment: number;
 }
 
 interface SingleCommentProps {
@@ -35,6 +36,7 @@ const SingleComment = (props: SingleCommentProps) => {
         isReply: false,
         replies: [],
         replyContent: '',
+        isFocusComment: 0,
     });
 
     const user = useAuth().user;
@@ -83,6 +85,14 @@ const SingleComment = (props: SingleCommentProps) => {
         }
     };
 
+    const handleReplyClick = () => {
+        handleReply(comment._id);
+        state.isReply = true;
+        state.isFocusComment = state.isFocusComment + 1;
+
+        setState(prev => ({...prev}));
+    };
+
     return (
         <div className="w-full flex gap-3">
             <Avatar 
@@ -103,7 +113,7 @@ const SingleComment = (props: SingleCommentProps) => {
                     <div className="hover:underline cursor-pointer">Like</div>
                     <div
                         className="hover:underline cursor-pointer"
-                        onClick={() => {handleReply(comment._id); setState(prev => ({...prev, isReply: true}))}}
+                        onClick={handleReplyClick}
                     >
                         Reply
                     </div>
@@ -124,6 +134,7 @@ const SingleComment = (props: SingleCommentProps) => {
                     <div className="mt-2">
                         <CommentInput
                             comment={state.replyContent}
+                            isFocusComment={state.isFocusComment}
                             handleCommentChange={handleReplyChange}
                             handleKeyDown={handleKeyDown}
                         />
