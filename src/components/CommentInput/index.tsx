@@ -1,21 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Avatar, Input } from "antd";
 import { SendOutlined, UserOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 
-interface CommentInputState {
+interface CommentInputProps {
     comment: string;
+    isFocusComment?: number;
+    handleKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+    handleCommentChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const CommentInput = () => {
+const CommentInput = (props: CommentInputProps) => {
 
-    const [state, setState] = useState<CommentInputState>({
-        comment: '',
-    });
+    const { comment, isFocusComment } = props;
+    const { handleKeyDown, handleCommentChange } = props;
+
+    const commentRef = useRef<HTMLTextAreaElement>(null);
+
+    useEffect(() => {
+        if (isFocusComment === undefined) return;
+        
+        if (commentRef.current && isFocusComment > 0) commentRef.current.focus();
+    },[isFocusComment]);
 
     return (
         <div className="w-full flex gap-3">
@@ -25,13 +35,15 @@ const CommentInput = () => {
             />
             <div className="w-full relative border border-[#d9d9d9] rounded-md py-1">
                 <TextArea
+                    ref={commentRef}
                     autoSize
-                    value={state.comment}
-                    onChange={(e) => setState(prev => ({...prev, comment: e.target.value}))}
+                    value={comment}
+                    onChange={handleCommentChange}
                     placeholder="Write your comment"
                     rootClassName="!border-none !shadow-none"
+                    onKeyDown={handleKeyDown}
                 />
-                <div className={`${!state.comment ? 'top-1/2 -translate-y-1/2 right-3 absolute cursor-not-allowed opacity-60' : 'cursor-pointer w-full flex justify-end pr-3 pb-1'}`}>
+                <div className={`${!comment ? 'top-1/2 -translate-y-1/2 right-3 absolute cursor-not-allowed opacity-60' : 'cursor-pointer w-full flex justify-end pr-3 pb-1'}`}>
                     <SendOutlined />
                 </div>
             </div>
