@@ -26,8 +26,8 @@ const getPost = async (postId: string): Promise<Post> => {
     return response.data;
 };
 
-const getAllPosts = async (): Promise<Post[]> => {
-    const response = await api.get<Post[]>("/api/post");
+const getAllPosts = async (sortByComments: boolean = false): Promise<Post[]> => {
+    const response = await api.get<Post[]>(`/api/post?sortByComments=${sortByComments}`);
     return response.data;
 };
 
@@ -59,10 +59,10 @@ export function useGetPost(postId: string): UseQueryResult<Post, Error> {
     });
 }
 
-export function useGetAllPosts(): UseQueryResult<Post[], Error> {
+export function useGetAllPosts(sortByComments: boolean = false): UseQueryResult<Post[], Error> {
     return useQuery<Post[], Error>({
-        queryKey: ["get-all-posts"],
-        queryFn: getAllPosts,
+        queryKey: ["get-all-posts", sortByComments],
+        queryFn: () => getAllPosts(sortByComments),
         refetchOnWindowFocus: false,
     });
 }

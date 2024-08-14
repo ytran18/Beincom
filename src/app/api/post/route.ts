@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
         const postId = searchParams.get("id");
+        const sortByComments = searchParams.get("sortByComments") === "true";
 
         if (postId) {
             const docRef = doc(fireStore, "posts", postId);
@@ -110,6 +111,10 @@ export async function GET(req: NextRequest) {
                     totalComment: totalCommentCount,
                 };
             }));
+
+            if (sortByComments) {
+                postsList.sort((a, b) => (b.totalComment || 0) - (a.totalComment || 0));
+            }
 
             return NextResponse.json(postsList, { status: 200 });
         }

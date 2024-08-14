@@ -12,15 +12,17 @@ import { message } from "antd";
 
 interface NewsFeedState {
     posts: Post[];
+    sort: 'latest' | 'comment';
 }
 
 const NewsFeed = () => {
 
     const [state, setState] = useState<NewsFeedState>({
         posts: [],
+        sort: 'latest',
     });
     
-    const { data, isPending, refetch } = useGetAllPosts();
+    const { data, isPending, refetch } = useGetAllPosts(state.sort === 'comment' ? true : false);
     const { mutate, isPending: createPending } = useCreatePost();
 
     useEffect(() => {
@@ -41,6 +43,15 @@ const NewsFeed = () => {
         );
     };
 
+    const handleChangeSort = (value: 'latest' | 'comment') => {
+        state.sort = value;
+        setState(prev => ({...prev}));
+    };
+
+    useEffect(() => {
+        refetch();
+    },[state.sort]);
+
     return (
         <div className="w-screen h-screen">
             <div className="w-full h-[3.75rem] px-24 flex items-center justify-center border-b bg-white shadow-sm">
@@ -54,8 +65,10 @@ const NewsFeed = () => {
             >
                 <Feed
                     posts={state.posts}
-                    handleNewPost={handleNewPost}
+                    sort={state.sort}
                     isCreatePostPending={createPending}
+                    handleNewPost={handleNewPost}
+                    handleChangeSort={handleChangeSort}
                 />
             </div>
         </div>

@@ -11,31 +11,27 @@ import { Post } from "@/types";
 
 interface FeedState {
     isModalCreatePost: boolean;
-    sort: 'latest' | 'comment';
 }
 
 interface FeedProps {
     posts?: Post[];
     isCreatePostPending: boolean;
+    sort: 'latest' | 'comment';
     handleNewPost: (post: Post) => void;
+    handleChangeSort: (value: 'latest' | 'comment') => void;
 }
 
 const Feed = (props: FeedProps) => {
 
-    const { posts, isCreatePostPending } = props;
-    const { handleNewPost } = props;
+    const { posts, isCreatePostPending, sort } = props;
+    const { handleNewPost, handleChangeSort } = props;
 
     const [state, setState] = useState<FeedState>({
         isModalCreatePost: false,
-        sort: 'latest',
     });
 
     const handleModalCreatePost = () => {
         setState(prev => ({...prev, isModalCreatePost: !prev.isModalCreatePost}));
-    };
-
-    const handleChangeSort = (value: 'latest' | 'comment') => {
-        setState(prev => ({...prev, sort: value}))
     };
 
     return (
@@ -47,7 +43,7 @@ const Feed = (props: FeedProps) => {
             </div>
             <div className="w-full mb-4">
                 <Sort
-                    sort={state.sort}
+                    sort={sort}
                     handleChangeSort={handleChangeSort}
                 />
             </div>
