@@ -65,6 +65,12 @@ const SingleComment = (props: SingleCommentProps) => {
                 content: state.replyContent,
                 createdAt: new Date().getTime(),
                 replies: [],
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email,
+                },
             };
 
             const { replies } = state;
@@ -101,7 +107,7 @@ const SingleComment = (props: SingleCommentProps) => {
             />
             <div className="flex flex-col gap-2 w-full">
                 <div className="w-full relative border border-[#d9d9d9] rounded-md py-1">
-                    <div className="text-sm font-extrabold px-[11px]">{user?.name}</div>
+                    <div className="text-sm font-extrabold px-[11px]">{comment.user?.name}</div>
                     <TextArea
                         autoSize
                         value={comment.content}

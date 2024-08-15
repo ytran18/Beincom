@@ -57,6 +57,12 @@ const SinglePost = (props: SinglePostProps) => {
                 content: state.comment,
                 createdAt: new Date().getTime(),
                 replies: [],
+                user: {
+                    _id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email,
+                },
             };
 
             const { comments } = state;
@@ -99,7 +105,7 @@ const SinglePost = (props: SinglePostProps) => {
                     icon={<UserOutlined />}
                 />
                 <div className="flex flex-col gap-1">
-                    <div className="text-sm font-bold tracking-wide">{user?.name}</div>
+                    <div className="text-sm font-bold tracking-wide">{post.user?.name}</div>
                     <div className="text-xs opacity-60 font-semibold">{timeGap(post.createdAt)}</div>
                 </div>
             </div>

@@ -24,7 +24,7 @@ const ReplyComment = (props: ReplyCommentProps) => {
             />
             <div className="flex flex-col gap-2 w-full">
                 <div className="w-full relative border border-[#d9d9d9] rounded-md py-1">
-                    <div className="text-sm font-extrabold px-[11px]">{user?.name}</div>
+                    <div className="text-sm font-extrabold px-[11px]">{replies.user?.name}</div>
                     <TextArea
                         autoSize
                         value={replies.content}

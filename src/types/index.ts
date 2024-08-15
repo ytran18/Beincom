@@ -5,6 +5,7 @@ export interface Comment {
     content: string;
     createdAt: number;
     replies?: Comment[];
+    user?: PostUser;
 };
 
 export interface Post {
@@ -15,6 +16,7 @@ export interface Post {
     comments: Comment[];
     createdAt: number;
     totalComment?: number;
+    user?: PostUser;
 };
 
 export interface User {
@@ -23,4 +25,11 @@ export interface User {
     username: string;
     email: string;
     password: string;
+};
+
+export interface PostUser {
+    _id: string;
+    name: string;
+    username: string;
+    email: string;
 };

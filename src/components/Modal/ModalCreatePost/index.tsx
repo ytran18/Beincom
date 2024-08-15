@@ -49,6 +49,12 @@ const ModalCreatePost = (props: ModalCreatePostProps) => {
             content: content,
             createdAt: new Date().getTime(),
             comments: [],
+            user: {
+                _id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+            },
         };
         
         handleModalCreatePost();
