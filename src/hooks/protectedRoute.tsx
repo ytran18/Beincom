@@ -13,12 +13,12 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     const token = localStorage.getItem("user-token");
 
     useEffect(() => {
-        if (!token && pathname !== "/login" && pathname !== "/signup") {
+        if (!token && pathname !== "/login" && pathname !== "/sign-up") {
             router.replace("/login");
         }
     }, [token, pathname, router]);
 
-    if (!token && pathname !== "/login" && pathname !== "/signup") {
+    if (!token && pathname !== "/login" && pathname !== "/sign-up") {
         return null;
     }
 
