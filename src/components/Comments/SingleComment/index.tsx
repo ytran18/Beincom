@@ -10,6 +10,7 @@ import { Comment } from "@/types";
 import { UserOutlined } from "@ant-design/icons";
 import CommentInput from "@/components/CommentInput";
 import ReplyComment from "../RepyComment";
+import { timeGap } from "@/utils";
 
 const { v4:uuidv4 } = require('uuid');
 
@@ -115,7 +116,8 @@ const SingleComment = (props: SingleCommentProps) => {
                         rootClassName="!border-none !shadow-none !bg-white !text-black !text-xs !cursor-text"
                     />
                 </div>
-                <div className="w-full flex items-center gap-10 text-xs">
+                <div className="w-full flex items-center gap-5 text-xs">
+                    <div className="">{timeGap(comment.createdAt)}</div>
                     <div className="hover:underline cursor-pointer">Like</div>
                     <div
                         className="hover:underline cursor-pointer"
