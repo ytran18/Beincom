@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,15 +13,13 @@ import LogoText from '@/assets/images/logo_beincomm_text_only.webp';
 
 const { Search } = Input;
 
-interface HeaderState {
-    searchContent: string;
+interface HeaderProps {
+    onSearch: (value: string) => void;
 }
 
-const Header = () => {
+const Header = (props: HeaderProps) => {
 
-    const [state, setState] = useState<HeaderState>({
-        searchContent: '',
-    });
+    const { onSearch } = props;
 
     return (
         <div className="w-full h-full flex items-center justify-between">
@@ -43,9 +40,9 @@ const Header = () => {
             <div className="hidden md:flex md:w-[300px] lg:w-[500px]">
                 <Search
                     rootClassName="w-full"
-                    value={state.searchContent}
-                    onChange={(e) => setState(prev => ({...prev, searchContent: e.target.value}))}
                     placeholder="Search content"
+                    onSearch={onSearch}
+                    allowClear
                 />
             </div>
             <div className=" flex items-center justify-end">

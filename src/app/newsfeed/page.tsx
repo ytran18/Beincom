@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Feed from "@/components/Feed";
 
-import { auth } from "@/core/firebase";
 import { useGetAllPosts, useCreatePost } from "@/hooks/usePost";
 
 import { Post } from "@/types";
@@ -21,13 +20,18 @@ const NewsFeed = () => {
         posts: [],
         sort: 'latest',
     });
-    
-    const { data, isPending, refetch } = useGetAllPosts(state.sort === 'comment' ? true : false);
+
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+
+    const { data, refetch } = useGetAllPosts(state.sort === 'comment' ? true : false);
     const { mutate, isPending: createPending } = useCreatePost();
 
     useEffect(() => {
-        if (data) setState(prev => ({...prev, posts: data}));
-    },[data]);
+        if (data) {
+            setState(prev => ({...prev, posts: data}));
+            setFilteredPosts(data);
+        }
+    }, [data]);
 
     const handleNewPost = (post: Post) => {
         mutate(post,
@@ -44,18 +48,30 @@ const NewsFeed = () => {
     };
 
     const handleChangeSort = (value: 'latest' | 'comment') => {
-        state.sort = value;
-        setState(prev => ({...prev}));
+        setState(prev => ({ ...prev, sort: value }));
+    };
+
+    const onSearch = (value: string) => {
+        const searchTerm = value.toLowerCase();
+
+        const filtered = state.posts.filter(post => 
+            post.title.toLowerCase().includes(searchTerm) || 
+            post.content.toLowerCase().includes(searchTerm)
+        );
+
+        setFilteredPosts(filtered);
     };
 
     useEffect(() => {
         refetch();
-    },[state.sort]);
+    }, [state.sort]);
 
     return (
         <div className="w-screen h-screen">
             <div className="w-full h-[3.75rem] px-24 flex items-center justify-center border-b bg-white shadow-sm">
-                <Header />
+                <Header
+                    onSearch={onSearch}
+                />
             </div>
             <div
                 className="bg-[#eaedf2] w-full flex justify-center overflow-y-auto"
@@ -64,7 +80,7 @@ const NewsFeed = () => {
                 }}
             >
                 <Feed
-                    posts={state.posts}
+                    posts={filteredPosts}
                     sort={state.sort}
                     isCreatePostPending={createPending}
                     handleNewPost={handleNewPost}
