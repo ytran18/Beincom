@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <h1>Beincom challenge</h1>
+ 
+   
+<h4>
+    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
+  </h4>
+</div>
 
-## Getting Started
+<br />
 
-First, run the development server:
+<!-- Table of Contents -->
+#  Table of Contents
+
+- [About the Project](#star2-about-the-project)
+  * [Screenshots](#camera-screenshots)
+  * [Tech Stack](#space_invader-tech-stack)
+  * [Features](#dart-features)
+- [Run Locally](#running-run-locally)
+
+
+<!-- Screenshots -->
+### Screenshots
+
+<div align="center"> 
+  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+</div>
+
+
+<!-- TechStack -->
+### Tech Stack
+<li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+<li><a href="https://nextjs.org/">Next.js</a></li>
+<li><a href="https://reactjs.org/">React.js</a></li>
+<li><a href="https://tailwindcss.com/">TailwindCSS</a></li>
+<li><a href="https://firebase.google.com/">Firebase</a></li>
+<li><a href="https://ant.design/">Ant Design</a></li>
+<li><a href="https://axios-http.com/docs/intro">Axios</a></li>
+<li><a href="https://tanstack.com/query/latest/docs/framework/react/overview">React Query</a></li>
+
+<!-- Features -->
+### Features
+
+- Sign up
+- Log in ( with email and password )
+- Log out
+- Create post
+- Comment
+- Reply comment
+- Detail post
+- Sort post ( amount of comment and latest post )
+- Search post ( with title and content )
+
+<!-- Getting Started -->
+## 	Getting Started
+
+<!-- Run Locally -->
+###  Run Locally
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone git@github.com:ytran18/Beincom.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd Beincom
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Install dependencies
 
-## Learn More
+```bash
+  npm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  npm run dev
+```

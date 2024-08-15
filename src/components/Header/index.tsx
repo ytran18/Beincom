@@ -18,7 +18,7 @@ import LogoText from '@/assets/images/logo_beincomm_text_only.webp';
 const { Search } = Input;
 
 interface HeaderProps {
-    onSearch: (value: string) => void;
+    onSearch?: (value: string) => void;
 }
 
 const Header = (props: HeaderProps) => {
