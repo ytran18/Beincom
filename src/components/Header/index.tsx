@@ -3,8 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Input, Avatar, Popover } from "antd";
+import { Input, Avatar, Popover, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+
+import { signOut } from "firebase/auth";
+import { auth } from "@/core/firebase";
+import { useRouter } from "next/navigation";
 
 import ProfilePopover from "../Popover/ProfilePopover";
 
@@ -20,6 +24,17 @@ interface HeaderProps {
 const Header = (props: HeaderProps) => {
 
     const { onSearch } = props;
+    const router = useRouter();
+
+    const handleLogOut = async () => {
+        try {
+            await signOut(auth);
+            localStorage.removeItem('user-token');
+            router.push('/login');
+        } catch (error) {
+            message.error('Internal error');
+        }
+    };
 
     return (
         <div className="w-full h-full flex items-center justify-between">
@@ -51,7 +66,9 @@ const Header = (props: HeaderProps) => {
                     placement="bottomRight"
                     arrow={false}
                     content={
-                        <ProfilePopover />
+                        <ProfilePopover
+                            handleLogOut={handleLogOut}
+                        />
                     }
                 >
                     <Avatar

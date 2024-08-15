@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import Providers from "@/core/providers";
+import ProtectedRoute from "@/hooks/protectedRoute";
 import "./globals.scss";
 
 const inter = Lato({ subsets: ["latin"], weight: '400' });
@@ -21,7 +22,9 @@ export default function RootLayout({
             <body className={inter.className}>
                 <Providers>
                     <AntdRegistry>
-                        {children}
+                        <ProtectedRoute>
+                            {children}
+                        </ProtectedRoute>
                     </AntdRegistry>
                 </Providers>
             </body>

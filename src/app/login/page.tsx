@@ -34,6 +34,7 @@ const Login = () => {
             const user = userCredential.user;
 
             const token = await user.getIdToken();
+            localStorage.setItem('user-token', token);
 
             message.success('Login successful!');
             router.push('/newsfeed');
