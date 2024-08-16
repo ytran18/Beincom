@@ -54,42 +54,46 @@ const SingleComment = (props: SingleCommentProps) => {
         setState(prev => ({...prev, replyContent: event.target.value}));
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleComment = () => {
         if (!user?._id) return;
+        
+        const data: Comment = {
+            _id: uuidv4(),
+            userId: user?._id,
+            postId: comment.postId,
+            content: state.replyContent,
+            createdAt: new Date().getTime(),
+            replies: [],
+            user: {
+                _id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+            },
+        };
 
+        const { replies } = state;
+
+        mutate(
+            {commentId: comment._id, reply: data},
+            {
+                onSuccess: () => {
+                    message.success("Reply successfully!");
+                    replies.push(data);
+                    setState(prev => ({...prev, replies: replies, replyContent: ''}))
+                },
+                onError: (error) => {
+                    message.error(`Failed to reply: ${error.message}`);
+                },
+            }
+        );
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
-            const data: Comment = {
-                _id: uuidv4(),
-                userId: user?._id,
-                postId: comment.postId,
-                content: state.replyContent,
-                createdAt: new Date().getTime(),
-                replies: [],
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    username: user.username,
-                    email: user.email,
-                },
-            };
-
-            const { replies } = state;
-
-            mutate(
-                {commentId: comment._id, reply: data},
-                {
-                    onSuccess: () => {
-                        message.success("Reply successfully!");
-                        replies.push(data);
-                        setState(prev => ({...prev, replies: replies, replyContent: ''}))
-                    },
-                    onError: (error) => {
-                        message.error(`Failed to reply: ${error.message}`);
-                    },
-                }
-            );
-        }
+            handleComment();
+        };
     };
 
     const handleReplyClick = () => {
@@ -145,6 +149,7 @@ const SingleComment = (props: SingleCommentProps) => {
                             isFocusComment={state.isFocusComment}
                             handleCommentChange={handleReplyChange}
                             handleKeyDown={handleKeyDown}
+                            handleComment={handleComment}
                         />
                     </div>
                 )}
