@@ -144,9 +144,9 @@ const SinglePost = (props: SinglePostProps) => {
             </div>
 
             <div className="w-full flex items-center text-xl border-t border-b py-2">
-                <div className="cursor-pointer px-4 sm:px-10 rounded-md py-1 hover:bg-[#f4f4f4]">
+                {/* <div className="cursor-pointer px-4 sm:px-10 rounded-md py-1 hover:bg-[#f4f4f4]">
                     <LikeOutlined />
-                </div>
+                </div> */}
                 <div
                     className="cursor-pointer px-4 sm:px-10 rounded-md py-1 hover:bg-[#f4f4f4]"
                     onClick={handleFocusComment}
