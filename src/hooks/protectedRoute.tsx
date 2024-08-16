@@ -5,7 +5,6 @@ import { ReactNode, useEffect, useState } from "react";
 
 interface ProtectedRouteProps {
     children: ReactNode;
-    validRoutes: string[];
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
