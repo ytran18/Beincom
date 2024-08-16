@@ -8,24 +8,24 @@ import {
 import api from "@/service";
 import { Post } from "@/types";
 
-// Định nghĩa kiểu dữ liệu cho phản hồi của việc tạo bài đăng mới
 interface CreatePostResponse {
     data: Post;
     message: string;
 }
 
-// Hàm gửi yêu cầu tạo bài đăng mới
+// create new post
 const createPost = async (newPost: Post): Promise<CreatePostResponse> => {
     const response = await api.post<CreatePostResponse>("/api/post", newPost);
     return response.data;
 };
 
-// Hàm lấy thông tin chi tiết của bài đăng theo ID
+// get post by id
 const getPost = async (postId: string): Promise<Post> => {
     const response = await api.get<Post>(`/api/post?id=${postId}`);
     return response.data;
 };
 
+// get all posts
 const getAllPosts = async (sortByComments: boolean = false): Promise<Post[]> => {
     const response = await api.get<Post[]>(`/api/post?sortByComments=${sortByComments}`);
     return response.data;

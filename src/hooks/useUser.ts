@@ -8,24 +8,23 @@ import {
 import api from "@/service";
 import { User } from "@/types";
 
-// Định nghĩa kiểu dữ liệu cho phản hồi
 interface CreateUserResponse {
     data: User;
     message: string;
 }
 
-// Hàm gửi yêu cầu tạo người dùng mới
+// creat new user
 const createUser = async (newUser: User): Promise<CreateUserResponse> => {
     const response = await api.post<CreateUserResponse>("/api/user", newUser);
     return response.data;
 };
 
+// get user by id
 const getUser = async (userId: string): Promise<User> => {
     const response = await api.get<User>(`/api/user?id=${userId}`);
     return response.data;
 };
 
-// Hook sử dụng useMutation để tạo người dùng mới
 export function useCreateUser(): UseMutationResult<
     CreateUserResponse,
     Error,

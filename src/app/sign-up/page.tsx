@@ -40,6 +40,7 @@ const SignUp = () => {
 
     const { mutate, isPending } = useCreateUser();
 
+    // create account with firebase
     const signUp = async (email: string, password: string) => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);

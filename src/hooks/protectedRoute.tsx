@@ -21,11 +21,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         }
     }, [pathname, router]);
 
-    // Handle the case where `token` is not yet determined
-    if (token === null) {
-        return null;
-    }
-
     if (!token && pathname !== "/login" && pathname !== "/sign-up") {
         return null;
     }

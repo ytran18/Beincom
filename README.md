@@ -1,40 +1,16 @@
-<div align="center">
-  <h1>Beincom challenge</h1>
- 
-   
-<h4>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
-  </h4>
-</div>
 
-<br />
+  <h1>Beincom challenge</h1>
 
 <!-- Table of Contents -->
 #  Table of Contents
 
-- [About the Project](#star2-about-the-project)
-  * [Screenshots](#camera-screenshots)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
+- [Tech Stack](#space_invader-tech-stack)
+- [Features](#dart-features)
 - [Run Locally](#running-run-locally)
-
-
-<!-- Screenshots -->
-### Screenshots
-
-<div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
-</div>
-
 
 <!-- TechStack -->
 ### Tech Stack
+<div id="space_invader-tech-stack">
 <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
 <li><a href="https://nextjs.org/">Next.js</a></li>
 <li><a href="https://reactjs.org/">React.js</a></li>
@@ -43,17 +19,22 @@
 <li><a href="https://ant.design/">Ant Design</a></li>
 <li><a href="https://axios-http.com/docs/intro">Axios</a></li>
 <li><a href="https://tanstack.com/query/latest/docs/framework/react/overview">React Query</a></li>
+</div>
 
 <!-- Features -->
 ### Features
 
 - Sign up
+   <img src="https://firebasestorage.googleapis.com/v0/b/form-flow-4f44d.appspot.com/o/images%2FScreenshot%202024-08-16%20at%2010.26.04.png?alt=media&token=ee01111f-b0f7-4034-8685-039bdaa71e3b" alt="contributors" />
 - Log in ( with email and password )
+   <img src="https://firebasestorage.googleapis.com/v0/b/form-flow-4f44d.appspot.com/o/images%2FScreenshot%202024-08-16%20at%2010.22.51.png?alt=media&token=148abbeb-3c6c-4b94-a79d-eea34dd9b367" alt="contributors" />
 - Log out
 - Create post
+   <img src="https://firebasestorage.googleapis.com/v0/b/form-flow-4f44d.appspot.com/o/images%2FScreenshot%202024-08-16%20at%2010.27.30.png?alt=media&token=cc986b92-6c5e-432e-b1ea-87fc39ab2d2a" alt="contributors" />
 - Comment
 - Reply comment
 - Detail post
+   <img src="https://firebasestorage.googleapis.com/v0/b/form-flow-4f44d.appspot.com/o/images%2FScreenshot%202024-08-16%20at%2010.28.22.png?alt=media&token=58fea3a0-a623-443b-88f5-71959c72f249" alt="contributors" />
 - Sort post ( amount of comment and latest post )
 - Search post ( with title and content )
 
@@ -86,3 +67,8 @@ Start the server
 ```bash
   npm run dev
 ```
+
+Open local server [http://localhost:3000](http://localhost:3000).
+
+### Testing
+About testing, since I don’t have prior experience, it took me a bit longer to research, and I couldn’t finish it on time, so it hasn’t been included yet.
