@@ -10,6 +10,7 @@
 - [Features](#dart-features)
 - [Run Locally](#running-run-locally)
 - [Testing](#testing)
+- [Environment variables](#env)
 
 <!-- TechStack -->
 ### Tech Stack
@@ -75,7 +76,12 @@
   Open local server [http://localhost:3000](http://localhost:3000).
 </div>
 
+### Testing
 <div id="testing">
-  ### Testing
   About testing, since I don’t have prior experience, it took me a bit longer to research, and I couldn’t finish it on time, so it hasn’t been included yet.
+</div>
+
+### Environment variables
+<div id="env">
+  Because this is a challenge, I will commit the .env.local file so that the judges can run it locally. In a real scenario, this file should be added to .gitignore
 </div>
