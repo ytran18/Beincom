@@ -1,5 +1,7 @@
 
-  <h1>Beincom challenge</h1>
+<h1>Beincom challenge</h1>
+
+<a href="https://beincom-nnxx.vercel.app/">Live preview</a>
 
 <!-- Table of Contents -->
 #  Table of Contents
