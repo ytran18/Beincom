@@ -45,41 +45,45 @@ const SinglePost = (props: SinglePostProps) => {
         setState(prev => ({...prev, comment: event.target.value}));
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleComment = () => {
         if (!user?._id) return;
         
+        const data: Comment = {
+            _id: uuidv4(),
+            userId: user?._id,
+            postId: post._id,
+            content: state.comment,
+            createdAt: new Date().getTime(),
+            replies: [],
+            user: {
+                _id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+            },
+        };
+
+        const { comments } = state;
+
+        mutate(
+            data,
+            {
+                onSuccess: () => {
+                    message.success("Comment successfully!");
+                    comments.push(data);
+                    setState(prev => ({...prev, comments: comments, comment: ''}))
+                },
+                onError: (error) => {
+                    message.error(`Failed to comment: ${error.message}`);
+                },
+            }
+        );
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
-            const data: Comment = {
-                _id: uuidv4(),
-                userId: user?._id,
-                postId: post._id,
-                content: state.comment,
-                createdAt: new Date().getTime(),
-                replies: [],
-                user: {
-                    _id: user._id,
-                    name: user.name,
-                    username: user.username,
-                    email: user.email,
-                },
-            };
-
-            const { comments } = state;
-
-            mutate(
-                data,
-                {
-                    onSuccess: () => {
-                        message.success("Comment successfully!");
-                        comments.push(data);
-                        setState(prev => ({...prev, comments: comments, comment: ''}))
-                    },
-                    onError: (error) => {
-                        message.error(`Failed to comment: ${error.message}`);
-                    },
-                }
-            );
+            handleComment();
         };
     };
 
@@ -156,6 +160,7 @@ const SinglePost = (props: SinglePostProps) => {
                     isFocusComment={state.isFocusComment}
                     handleKeyDown={handleKeyDown}
                     handleCommentChange={handleCommentChange}
+                    handleComment={handleComment}
                 />
             </div>
         </div>

@@ -12,12 +12,13 @@ interface CommentInputProps {
     isFocusComment?: number;
     handleKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     handleCommentChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleComment: () => void;
 }
 
 const CommentInput = (props: CommentInputProps) => {
 
     const { comment, isFocusComment } = props;
-    const { handleKeyDown, handleCommentChange } = props;
+    const { handleKeyDown, handleCommentChange, handleComment } = props;
 
     const commentRef = useRef<HTMLTextAreaElement>(null);
 
@@ -43,7 +44,10 @@ const CommentInput = (props: CommentInputProps) => {
                     rootClassName="!border-none !shadow-none"
                     onKeyDown={handleKeyDown}
                 />
-                <div className={`${!comment ? 'top-1/2 -translate-y-1/2 right-3 absolute cursor-not-allowed opacity-60' : 'cursor-pointer w-full flex justify-end pr-3 pb-1'}`}>
+                <div
+                    className={`${!comment ? 'top-1/2 -translate-y-1/2 right-3 absolute cursor-not-allowed opacity-60' : 'cursor-pointer w-full flex justify-end pr-3 pb-1'}`}
+                    onClick={handleComment}
+                >
                     <SendOutlined />
                 </div>
             </div>
