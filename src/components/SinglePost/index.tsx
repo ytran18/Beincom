@@ -100,6 +100,17 @@ const SinglePost = (props: SinglePostProps) => {
         router.push(`/post/${post._id}`)
     };
 
+    const handleCopyLink = () => {
+        const link = `${process.env.NEXT_PUBLIC_URL}/post/${post._id}`;
+        try {
+            navigator.clipboard.writeText(link).then(() => {
+                message.success("Copied link!")
+            })
+        } catch (error) {
+            message.error('Copy link failed!');            
+        };
+    };
+
     return (
         <div className="w-full h-fit p-4 flex flex-col gap-3 shadow-md bg-white rounded-lg">
             <div className="w-full flex gap-4">
@@ -142,7 +153,10 @@ const SinglePost = (props: SinglePostProps) => {
                 >
                     <CommentOutlined />
                 </div>
-                <div className="cursor-pointer px-4 sm:px-10 rounded-md py-1 hover:bg-[#f4f4f4]">
+                <div
+                    className="cursor-pointer px-4 sm:px-10 rounded-md py-1 hover:bg-[#f4f4f4]"
+                    onClick={handleCopyLink}
+                >
                     <LinkOutlined />
                 </div>
             </div>
